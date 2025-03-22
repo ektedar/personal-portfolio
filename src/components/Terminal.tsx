@@ -142,21 +142,49 @@ Available commands:
       100% { opacity: 1; transform: scale(1); }
     }
 
+    @keyframes crt-on {
+      0% { transform: scaleY(0.01); opacity: 0; }
+      20% { transform: scaleY(0.1); opacity: 0.2; }
+      40% { transform: scaleY(0.4); opacity: 0.4; }
+      60% { transform: scaleY(0.6); opacity: 0.6; }
+      80% { transform: scaleY(0.8); opacity: 0.8; }
+      100% { transform: scaleY(1); opacity: 1; }
+    }
+
+    @keyframes text-shadow {
+      0% { text-shadow: 0 0 10px rgba(255, 180, 0, 0.6); }
+      50% { text-shadow: 0 0 14px rgba(255, 180, 0, 0.8); }
+      100% { text-shadow: 0 0 10px rgba(255, 180, 0, 0.6); }
+    }
+
+    .fullscreen-terminal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #000;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     .tv-outer-casing {
       background: #111;
-      border-radius: 40px;
-      padding: 20px;
+      border-radius: 20px;
+      padding: 10px;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8), inset 0 0 10px rgba(0, 0, 0, 0.5);
-      border: 4px solid #333;
-      width: 100%;
-      max-width: 800px;
-      aspect-ratio: 4/3;
+      border: 4px solid #222;
+      width: 98vw;
+      height: 98vh;
+      max-width: 98vw;
     }
 
     .tv-screen-border {
       background: #000;
-      border-radius: 30px;
-      padding: 5px;
+      border-radius: 15px;
+      padding: 3px;
       overflow: hidden;
       position: relative;
       box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
@@ -164,8 +192,8 @@ Available commands:
     }
 
     .tv-screen {
-      background: #002200;
-      border-radius: 25px;
+      background: #100800;
+      border-radius: 12px;
       overflow: hidden;
       position: relative;
       height: 100%;
@@ -175,16 +203,17 @@ Available commands:
       position: relative;
       z-index: 2;
       transform-origin: center center;
-      padding: 20px;
+      padding: 30px;
       height: 100%;
-      font-family: monospace;
-      font-size: 16px;
-      color: #00ff41;
-      text-shadow: 0 0 8px rgba(0, 255, 65, 0.8);
+      font-family: "VT323", "Courier New", monospace;
+      font-size: 32px;
+      color: #FFBF00;
+      text-shadow: 0 0 12px rgba(255, 180, 0, 0.8);
       opacity: 0;
-      line-height: 1.4;
+      line-height: 1.3;
       display: flex;
       flex-direction: column;
+      animation: text-shadow 2s infinite;
     }
 
     .terminal-scroll-area {
@@ -192,27 +221,27 @@ Available commands:
       overflow-y: auto;
       overflow-x: hidden;
       scrollbar-width: thin;
-      scrollbar-color: #00ff41 #001100;
+      scrollbar-color: #FFBF00 #331100;
     }
 
     .terminal-scroll-area::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
+      width: 10px;
+      height: 10px;
     }
 
     .terminal-scroll-area::-webkit-scrollbar-track {
-      background: #001100;
+      background: #331100;
       border-radius: 4px;
     }
 
     .terminal-scroll-area::-webkit-scrollbar-thumb {
-      background-color: #00ff41;
+      background-color: #FFBF00;
       border-radius: 4px;
-      border: 2px solid #002200;
+      border: 2px solid #100800;
     }
 
     .input-area {
-      margin-top: 10px;
+      margin-top: 15px;
       flex-shrink: 0;
       display: flex;
     }
@@ -220,6 +249,7 @@ Available commands:
     .command-prompt {
       display: flex;
       align-items: center;
+      width: 100%;
     }
 
     .horizontal-lines {
@@ -230,8 +260,8 @@ Available commands:
       bottom: 0;
       background: repeating-linear-gradient(
         0deg,
-        rgba(0, 0, 0, 0.15),
-        rgba(0, 0, 0, 0.15) 1px,
+        rgba(0, 0, 0, 0.18),
+        rgba(0, 0, 0, 0.18) 1px,
         transparent 1px,
         transparent 2px
       );
@@ -244,15 +274,15 @@ Available commands:
       top: 0;
       left: 0;
       width: 100%;
-      height: 4px;
+      height: 5px;
       background: linear-gradient(
         to bottom,
-        rgba(0, 255, 65, 0.15),
-        rgba(0, 255, 65, 0.35) 50%,
-        rgba(0, 255, 65, 0.15)
+        rgba(255, 180, 0, 0.15),
+        rgba(255, 180, 0, 0.35) 50%,
+        rgba(255, 180, 0, 0.15)
       );
-      animation: scanline 6s linear infinite;
-      opacity: 0.8;
+      animation: scanline 4s linear infinite;
+      opacity: 0.7;
       pointer-events: none;
       z-index: 4;
     }
@@ -264,7 +294,7 @@ Available commands:
       width: 100%;
       height: 100%;
       animation: flicker 0.1s infinite;
-      opacity: 0.03;
+      opacity: 0.05;
       pointer-events: none;
       mix-blend-mode: overlay;
       z-index: 5;
@@ -278,8 +308,8 @@ Available commands:
       bottom: 0;
       background: radial-gradient(
         ellipse at center,
-        rgba(0, 255, 65, 0.2) 0%,
-        rgba(0, 20, 0, 0.2) 80%,
+        rgba(255, 180, 0, 0.2) 0%,
+        rgba(50, 30, 0, 0.2) 80%,
         rgba(0, 0, 0, 0.5) 100%
       );
       pointer-events: none;
@@ -294,7 +324,7 @@ Available commands:
       bottom: -50%;
       background: radial-gradient(
         ellipse at center,
-        rgba(255, 255, 255, 0.1) 0%,
+        rgba(255, 255, 255, 0.08) 0%,
         rgba(255, 255, 255, 0) 70%
       );
       transform: rotate(-45deg);
@@ -310,12 +340,12 @@ Available commands:
       bottom: 0;
       background: radial-gradient(
         ellipse at center,
-        rgba(0, 0, 0, 0) 60%,
+        rgba(0, 0, 0, 0) 50%,
         rgba(0, 0, 0, 0.7) 100%
       );
       pointer-events: none;
       z-index: 7;
-      border-radius: 25px;
+      border-radius: 12px;
     }
 
     .screen-curve {
@@ -324,14 +354,27 @@ Available commands:
       left: 0;
       right: 0;
       bottom: 0;
-      box-shadow: inset 0 0 100px 40px rgba(0, 0, 0, 0.6);
-      border-radius: 25px;
+      box-shadow: inset 0 0 150px 60px rgba(0, 0, 0, 0.7);
+      border-radius: 12px;
       pointer-events: none;
       z-index: 8;
     }
 
+    .screen-distortion {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAhGVYSWZNTQAqAAAACAAFARIAAwAAAAEAAQAAARoABQAAAAEAAABKARsABQAAAAEAAABSASgAAwAAAAEAAgAAh2kABAAAAAEAAABaAAAAAAAAAEgAAAABAAAASAAAAAEAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAMqADAAQAAAABAAAAMgAAAADGaZOiAAAACXBIWXMAAAsTAAALEwEAmpwYAAABWWlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iWE1QIENvcmUgNi4wLjAiPgogICA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPgogICAgICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgICAgICAgICB4bWxuczp0aWZmPSJodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyI+CiAgICAgICAgIDx0aWZmOk9yaWVudGF0aW9uPjE8L3RpZmY6T3JpZW50YXRpb24+CiAgICAgIDwvcmRmOkRlc2NyaXB0aW9uPgogICA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgoZXuEHAAAAyElEQVRoBe2ZQQrCQAxFM96i0JsUvLJ4E8G9ZCdu+gJtIHQh1EwY/Q9CGJL+/9nENFQJgQABAgQI7CRwSVJfd6ydXeZjjdO5Hs/vNs7l8rPNbbdlqtdHmeeyjee2v27z4wy6fNt8Hm9B5AiAQEsAIi0RPjcFINJE4UVLACItET43BSDSROFFSwAiLRE+NwUg0kThRUsAIi0RPjcFINJE4UVLACItET43BSDSROFFSwAiLRE+NwUg0kThRUsAIi0RPjcF/h7R/DW4EyBAgMAhApPvBWFgpLzNkwAAAABJRU5ErkJggg==');
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 9;
+      mix-blend-mode: overlay;
+    }
+
     .power-on-animation {
-      animation: power-on 1s ease-in-out forwards;
+      animation: power-on 1s ease-in-out forwards, crt-on 1.5s ease-in-out forwards;
     }
 
     input.retro-input {
@@ -342,7 +385,7 @@ Available commands:
       font-family: inherit;
       font-size: inherit;
       text-shadow: inherit;
-      width: calc(100% - 20px);
+      width: calc(100% - 30px);
       caret-color: transparent;
       position: absolute;
       left: 0;
@@ -353,29 +396,36 @@ Available commands:
 
     .cursor-blink {
       display: inline-block;
-      width: 10px;
-      height: 16px;
-      background-color: #00ff41;
+      width: 15px;
+      height: 32px;
+      background-color: #FFBF00;
       animation: blink 1s step-end infinite;
       vertical-align: middle;
-      box-shadow: 0 0 8px #00ff41;
-      margin-left: 2px;
+      box-shadow: 0 0 10px #FFBF00;
+      margin-left: 5px;
     }
 
     .input-text {
-      margin-left: 2px;
+      margin-left: 5px;
     }
 
     @keyframes blink {
       from, to { opacity: 1; }
       50% { opacity: 0; }
     }
+
+    @font-face {
+      font-family: 'VT323';
+      font-style: normal;
+      font-weight: 400;
+      src: url(https://fonts.gstatic.com/s/vt323/v17/pxiKyp0ihIEF2isfFJU.woff2) format('woff2');
+    }
   `;
 
     return (
         <>
             <style>{crtStyles}</style>
-            <div className="flex items-center justify-center w-full h-screen bg-black p-4">
+            <div className="fullscreen-terminal">
                 <div className="tv-outer-casing">
                     <div className="tv-screen-border">
                         <div className="tv-screen">
@@ -387,6 +437,7 @@ Available commands:
                             <div className="screen-glare"></div>
                             <div className="vignette"></div>
                             <div className="screen-curve"></div>
+                            <div className="screen-distortion"></div>
 
                             {/* Terminal content */}
                             <div
